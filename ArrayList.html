@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		// ArrayList
+		var arrayList = [];
+		var size = 0; // 현재 추가된 요소 수
+		var arrLength = 5; // 초기 arrayList 길이
+
+		// 길이 체크
+		var extendLen = function(){
+			if(arrayList.length >= arrLength){
+				arrLength++;
+			}
+		}
+
+		// 마지막 자리에 요소 추가
+		var addLast = function(element){
+			extendLen();
+			arrayList[size] = element;
+			size++;
+			return arrayList;
+		}
+
+		// 첫번째 자리에 요소 추가
+		var addFirst = function(element){
+			return add(0, element);
+		}
+
+		// 원하는 위치에 요소 추가
+		var add = function(index, element){
+			extendLen();
+			for(var i=size-1; i>= index; i--){
+				arrayList[i+1] = arrayList[i];
+			}
+			arrayList[index] = element;
+			size++;
+			return arrayList;
+		}
+
+		// 요소 삭제
+		var remove = function(index){
+			for(var i=index; i<=size; i++){
+				arrayList[i] = arrayList[i+1]; 
+			}
+			size--;
+			if(size >= arrLength){
+				arrLength--;
+			}
+			return arrayList;
+		}
+
+		// 요소 가져오기
+		var get = function(index){
+			return arrayList[index];
+		}
+
+		// 요소 확인
+		var show = function(){
+			for(var i=0; i<size; i++){
+				console.log(arrayList[i]);
+			}
+		}
+
+		addLast(10);
+		addLast(20);
+		addLast(30);
+		show();
+		console.log('result: 10-20-30');
+		addFirst(5);
+		add(3, 15);
+		show();
+		console.log('result: 5-10-20-15-30');
+		console.log(get(2));
+		console.log('result: 20');
+		remove(2);
+		show();
+		console.log('result: 5-10-15-30')
+		remove(0);
+		show();
+		console.log('result: 10-15-30')
+
+
+	</script>
+</body>
+</html>
