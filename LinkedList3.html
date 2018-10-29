@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var LinkedList = function(){
+		this.length = 0;
+		this.head = null;
+	}
+
+	var Node = function(elem){
+		this.data = elem;
+		this.next = null;
+	}
+
+	LinkedList.prototype.add = function(elem){
+		var node = new Node(elem);
+		var curr;
+
+		if(this.head === null){
+			this.head = node;
+		} else {
+			curr = this.head;
+			while(curr.next){
+				curr = curr.next;
+			}
+			curr.next = node;
+		}
+		this.length++;
+	}
+
+	LinkedList.prototype.toString = function(){
+		var curr = this.head;
+		var str = '';
+		while (curr){
+			str += curr.data;
+			str += " -> ";
+			curr = curr.next;
+		}
+		return str;
+	}
+
+	var list = new LinkedList();
+	list.add(1);
+	list.add(2);
+	list.add(3);
+	list.add(4);
+	list.add(5);
+	console.log(list.toString());
+</script>
+</body>
+</html>
