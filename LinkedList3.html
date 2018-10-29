@@ -31,6 +31,20 @@
 		this.length++;
 	}
 
+	LinkedList.prototype.remove = function(){
+		var curr = this.head;
+		var prev;
+		var index = 0;
+		while(index++ < this.length-1){
+			prev = curr;
+			curr = prev.next;
+		}
+		prev.next = curr.next;
+		this.length--;
+		curr.next = null;
+		return curr.data;
+	}
+
 	LinkedList.prototype.toString = function(){
 		var curr = this.head;
 		var str = '';
@@ -48,7 +62,10 @@
 	list.add(3);
 	list.add(4);
 	list.add(5);
+	list.remove();
+	list.remove();
 	console.log(list.toString());
+	
 </script>
 </body>
 </html>
