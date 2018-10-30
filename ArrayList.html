@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript">
+		// ArrayList
+		var List = function(){
+
+			this.arrayList = [];
+			this.arraySize = 0; // 현재 추가된 요소 수
+			this.arrLength = 5; // 초기 arrayList 길이
+		}
+
+		// 길이 체크
+		List.prototype.extendLen = function(){
+			if(this.arraySize >= this.arrLength){
+				this.arrLength++;
+			}
+		}
+
+		// 마지막 자리에 요소 추가
+		List.prototype.addLast = function(element){
+			this.extendLen();
+			this.arrayList[this.arraySize] = element;
+			this.arraySize++;
+			return this.arrayList;
+		}
+
+		// 첫번째 자리에 요소 추가
+		List.prototype.addFirst = function(element){
+			return this.add(0, element);
+		}
+
+		// 원하는 위치에 요소 추가
+		List.prototype.add = function(index, element){
+			this.extendLen();
+			for(var i=this.arraySize-1; i>= index; i--){
+				this.arrayList[i+1] = this.arrayList[i];
+			}
+			this.arrayList[index] = element;
+			this.arraySize++;
+			return this.arrayList;
+		}
+
+		// 요소 삭제
+		List.prototype.remove = function(index){
+			var removed = this.arrayList[index]; // 삭제된 요소
+			for(var i=index; i<=this.arraySize; i++){
+				this.arrayList[i] = this.arrayList[i+1]; 
+			}
+			this.arraySize--;
+			this.arrayList[this.arraySize] = null;
+			if(this.arraySize >= this.arrLength){
+				this.arrLength--;
+			}
+			return removed;
+		}
+
+		// 요소 가져오기
+		List.prototype.get = function(index){
+			return this.arrayList[index];
+		}
+
+		// 요소 찾기
+		List.prototype.find = function(element){
+			for(var i=0; i<this.arraySize; i++){
+				if(this.arrayList[i] === element){
+					return i;
+				}
+			}
+			return -1;
+		}
+
+		// 요소 확인
+		List.prototype.show = function(){
+			for(var i=0; i<this.arraySize; i++){
+				console.log(this.arrayList[i]);
+			}
+		}
+
+		var list = new List();
+
+		list.addLast(10);
+		list.addLast(20);
+		list.addLast(30);
+		list.show();
+		console.log('result: 10-20-30');
+		list.addFirst(5);
+		list.add(3, 15);
+		list.show();
+		console.log('result: 5-10-20-15-30');
+		console.log(list.get(2));
+		console.log('result: 20');
+		list.remove(2);
+		list.show();
+		console.log('result: 5-10-15-30');
+		console.log(list.remove(0));
+		list.show();
+		console.log('result: 10-15-30');
+		console.log(list.find(1));
+
+
+	</script>
+</body>
+</html>
