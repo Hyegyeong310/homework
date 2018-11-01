@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var Queue = function(){
+		this.queue = [];
+	}
+
+	Queue.prototype.add = function(elem){
+		this.queue.push(elem);
+		return this.queue;
+	}
+
+	Queue.prototype.remove = function(){
+		var removed = this.queue.shift();
+		return removed;
+	}
+
+	Queue.prototype.toString = function(){
+		var arr = [];
+		for(var i=0; i<this.queue.length; i++){
+			arr.push(this.queue[i]);
+		}
+		return arr;
+	}
+
+	var queue = new Queue();
+	queue.add(5);
+	queue.add(10);
+	queue.add(15);
+	console.log(queue.toString()); // [5,10,15]
+	console.log(queue.remove()); // 5
+	console.log(queue.toString()); // [10, 15]
+
+</script>
+</body>
+</html>
