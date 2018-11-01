@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var LinkedList = function(){
+		this.head = null;
+		this.length = 0;
+	}
+
+	var Node = function(elem){
+		this.data = elem;
+		this.next = null;
+	}
+
+	// element add
+	LinkedList.prototype.add = function(elem){
+		var node = new Node(elem);
+		var curr;
+		if(this.head === null){
+			this.head = node;
+		} else {
+			curr = this.head;
+			while(curr.next){
+				curr = curr.next;
+			}
+			curr.next = node;
+		}
+		this.length++;
+	}
+
+	// element remove
+	LinkedList.prototype.remove = function(){
+		var curr = this.head;
+		var prev, removed;
+		while(curr.next){
+			prev = curr;
+			curr = prev.next;
+		}
+		prev.next = curr.next;
+		removed = curr.data;
+		curr = null;
+		this.length--;
+		return removed;
+	}
+
+	LinkedList.prototype.toString = function(){
+		var str = '';
+		var curr = this.head;
+		if(curr.next === null){
+			return str += curr.data + ' -> ';
+		} else {
+			while(curr.next){
+				str += curr.data + ' -> ';
+				curr = curr.next;
+			}
+			str += curr.data + ' -> ';
+		}
+		return str;
+	}
+
+	var stack = new LinkedList();
+	stack.add(5);
+	stack.add(10);
+	stack.add(15);
+	console.log(stack.toString()); // 5 -> 10 -> 15 ->
+	console.log(stack.remove()); // 15
+	console.log(stack.toString()); // 5 -> 10 ->
+	stack.add(20);
+	console.log(stack.toString()); // 5 -> 10 -> 20
+</script>
+</body>
+</html>
