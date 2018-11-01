@@ -10,8 +10,7 @@
 
 ArrayList는 내부적으로 데이터를 배열에 저장한다. 데이터를 리스트의 처음이나 중간에 추가하면, 이후의 데이터들이 한칸씩 뒤로 물러나야한다.<br/>
 JavaScript로 데이터 추가에 대한 구현은 다음과 같다.
-<pre>
-<code>
+``` javascript
 // 첫번째 자리에 요소 추가
 List.prototype.addFirst = function(element){
     return this.add(0, element);
@@ -35,15 +34,13 @@ List.prototype.addLast = function(element){
     this.arraySize++;
     return this.arrayList;
 }
-</code>
-</pre>
+```
 ### 2.2 데이터의 삭제
 <img src="https://s3.ap-northeast-2.amazonaws.com/opentutorials-user-file/module/1335/2887.png"></img>
 > (출처: 생활코딩)
 
 추가와 마찬가지로 ArrayList는 비어있는 데이터가 없어야하기 때문에 삭제된 이후의 데이터를 하나하나 앞으로 이동시켜야 한다.
-<pre>
-<code>
+``` javascript
 // 요소 삭제
 List.prototype.remove = function(index){
     var removed = this.arrayList[index]; // 삭제될 요소를 return해주기 때문에 삭제되기 전에 담아둔다.
@@ -57,26 +54,22 @@ List.prototype.remove = function(index){
     }
     return removed;
 }
-</code>
-</pre>
+```
 ### 2.3 데이터 가져오기
 <code>numbers.get(2);</code><br/>
 <img src="https://s3.ap-northeast-2.amazonaws.com/opentutorials-user-file/module/1335/2891.png"></img>
 > (출처: 생활코딩)
 
 ArrayList의 장점은 여기에서 드러난다. 원하는 인덱스의 데이터를 바로 가져올 수 있다.
-<pre>
-<code>
+``` javascript
 // 요소 가져오기
 List.prototype.get = function(index){
     return this.arrayList[index];
 }
-</code>
-</pre>
+```
 ### 2.4 데이터 검색
 ArrayList 내에 내가 찾는 데이터가 있는지 확인하는 기능이다. 있다면 해당 데이터의 인덱스를, 없다면 -1을 반환한다.
-<pre>
-<code>
+``` javascript
 // 요소 찾기
 List.prototype.find = function(element){
     for(var i=0; i<this.arraySize; i++){
@@ -85,6 +78,5 @@ List.prototype.find = function(element){
         }
     }
     return -1; // 일치하는 데이터가 없으면 -1을 반환.
-}			
-</code>
-</pre>
+}
+```
