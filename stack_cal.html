@@ -70,6 +70,37 @@
 	}
 
 	console.log(result);
+
+	var calFunc = function(postfix){
+		var result = [];
+		for (var i=0; i<postfix.length; i++){
+			if(!isNaN(postfix[i])){
+				result.push(Number(postfix[i]));
+			} else {
+				var o = postfix[i];
+				var n2 = result.pop();
+				var n1 = result.pop();
+				switch (o) {
+					case '*':
+						result.push(n1*n2);
+						break;
+					case '/':
+						result.push(n1/n2);
+						break;
+					case '+':
+						result.push(n1+n2);
+						break;
+					case '-':
+						result.push(n1-n2);
+						break;
+				}
+			}
+		}
+		return result;
+	}
+
+	var postResult = calFunc(result);
+	console.log(postResult); // 213.6
 </script>
 </body>
 </html>
