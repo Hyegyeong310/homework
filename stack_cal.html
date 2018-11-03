@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	infix = '(12 * (93 - 4)) / 5'; // 12934-*5/
+	infixArr = infix.split(''); // ['12','93','4','-','*','5','/']
+	stack = [];
+	result = [];
+
+	var isNumber = function(elem){
+		if(elem >= '0' && elem <= '9'){
+			return true;
+		}
+		return false;
+	}
+
+	var operVal = function(op){
+		if(op === '*' || op === '/'){
+			return 5;
+		} else if(op === '+' || op === '-'){
+			return 3;
+		} else if(op === '('){
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
+	var operPrec = function(op1, op2){
+		return operVal(op1) >= operVal(op2);
+	}
+
+	for(var i=0;i<infixArr.length; i++){
+		if(infixArr[i] === ' '){
+			continue;
+		}
+
+		if(isNumber(infixArr[i])){
+			if(i>0 && isNumber(infixArr[i-1])){
+				result.push(result.pop() + infixArr[i]);
+			} else {
+				result.push(infixArr[i]);
+			}
+		} else {
+			if(infixArr[i] === '('){
+				stack.push(infixArr[i]);
+			} else if(infixArr[i] === ')'){
+				let popElem;
+				while(stack.length){
+					popElem = stack.pop();
+					if(popElem === '('){
+						break;
+					}
+					result.push(popElem);
+				}
+			} else {
+				while(stack.length && operPrec(stack[stack.length-1], infixArr[i])){
+					result.push(stack.pop());
+				}
+				stack.push(infixArr[i]);
+			}
+		}
+	}
+
+	while(stack.length){
+		result.push(stack.pop());
+	}
+
+	console.log(result);
+
+	var calFunc = function(postfix){
+		var result = [];
+		for (var i=0; i<postfix.length; i++){
+			if(!isNaN(postfix[i])){
+				result.push(Number(postfix[i]));
+			} else {
+				var o = postfix[i];
+				var n2 = result.pop();
+				var n1 = result.pop();
+				switch (o) {
+					case '*':
+						result.push(n1*n2);
+						break;
+					case '/':
+						result.push(n1/n2);
+						break;
+					case '+':
+						result.push(n1+n2);
+						break;
+					case '-':
+						result.push(n1-n2);
+						break;
+				}
+			}
+		}
+		return result;
+	}
+
+	var postResult = calFunc(result);
+	console.log(postResult); // 213.6
+</script>
+</body>
+</html>

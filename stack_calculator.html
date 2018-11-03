@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+
+	var Stack = function(){
+		this.stack = [];
+	}
+
+	Stack.prototype.top = function(){
+		if (!this.isEmpty()){
+			return this.stack[this.stack.length-1];
+		}
+		return false;
+	}
+
+	Stack.prototype.push = function(elem){
+		this.stack.push(elem);
+		return this.stack.length;
+	}
+
+	Stack.prototype.pop = function(){
+		var poped = this.stack.pop();
+		return poped;
+	}
+
+	Stack.prototype.isEmpty = function(){
+		if(this.stack.length <= 0){
+			return true;
+		}
+		return false;
+	}
+
+	Stack.prototype.toString = function(){
+		return this.stack;
+	}
+
+	var infix = '2-4+9'; // 24-9+
+	var infixArr = infix.split(''); // ['2','-','4','+','9']
+	var operator = ['+','-'];
+	var nums = [];
+	var stack = new Stack();
+	var postfix = [];
+
+	var isNumber = function(elem){
+		if(!operator.includes(elem)){
+			return true;
+		}
+		return false;
+	}
+
+	var checkInfix = function(arr){
+		for (var i in arr){
+			if(isNumber(arr[i])){
+				postfix.push(arr[i]);
+			} else {
+				if(!stack.isEmpty()){
+					postfix.push(stack.pop());
+					stack.push(arr[i]);
+				}
+				stack.push(arr[i]);
+			}
+		}
+		postfix.push(stack.pop());
+	}
+
+	checkInfix(infixArr);
+	console.log(postfix);
+
+</script>
+</body>
+</html>

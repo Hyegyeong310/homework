@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var Stack = function(){
+		this.stack = [];
+	}
+
+	// element 추가
+	Stack.prototype.add = function(elem){
+		this.stack.push(elem);
+		return this.stack;
+	}
+
+	// element 삭제
+	Stack.prototype.remove = function(){
+		var removed = this.stack.pop();
+		return removed;
+	}
+
+	// element show
+	Stack.prototype.toString = function(){
+		var arr = [];
+		for(var i=0; i<this.stack.length; i++){
+			arr.push(this.stack[i]);
+		}
+		return arr;
+	}
+
+
+	var stack = new Stack();
+	stack.add(5);
+	stack.add(10);
+	console.log(stack.toString()); // [5,10]
+	console.log(stack.remove()); // 10
+	console.log(stack.toString()); // [5]
+
+</script>
+</body>
+</html>
