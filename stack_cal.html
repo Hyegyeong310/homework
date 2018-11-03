@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	infix = '(2 * (3 - 4)) / 5'; // 234-*5/
+	infixArr = infix.split('');
+	stack = [];
+	result = [];
+
+	var isNumber = function(elem){
+		if(elem >= '0' && elem <= '9'){
+			return true;
+		}
+		return false;
+	}
+
+	var operVal = function(op){
+		if(op === '*' || op === '/'){
+			return 5;
+		} else if(op === '+' || op === '-'){
+			return 3;
+		} else if(op === '('){
+			return 1;
+		} else {
+			return -1;
+		}
+	}
+
+	var operPrec = function(op1, op2){
+		return operVal(op1) >= operVal(op2);
+	}
+
+	for(var i=0;i<infixArr.length; i++){
+		if(infixArr[i] === ' '){
+			continue;
+		}
+
+		if(isNumber(infixArr[i])){
+			result.push(infixArr[i]);
+		} else {
+			if(infixArr[i] === '('){
+				stack.push(infixArr[i]);
+			} else if(infixArr[i] === ')'){
+				let popElem;
+				while(stack.length){
+					popElem = stack.pop();
+					if(popElem === '('){
+						break;
+					}
+					result.push(popElem);
+				}
+			} else {
+				while(stack.length && operPrec(stack[stack.length-1], infixArr[i])){
+					result.push(stack.pop());
+				}
+				stack.push(infixArr[i]);
+			}
+		}
+	}
+
+	while(stack.length){
+		result.push(stack.pop());
+	}
+
+	console.log(result);
+</script>
+</body>
+</html>
