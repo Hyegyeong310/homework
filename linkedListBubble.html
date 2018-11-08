@@ -1,0 +1,186 @@
+<html>
+
+<head></head>
+
+<body>
+    <script>
+        // LinkedList class 정의
+        var LinkedList = function () {
+            this.size = 0;
+            this.head = null;
+            this.tail = null;
+        };
+
+        // Node class 정의
+        var Node = function (data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        // index check
+        LinkedList.prototype.indexChk = function (index) {
+            if (index >= 0 && index < this.size) {
+                return true;
+            }
+            return false;
+        }
+
+        // Node 찾기
+        LinkedList.prototype.findNode = function (index) {
+            if (this.indexChk(index)) {
+                var x = this.head;
+                for (var i = 0; i < index; i++) {
+                    x = x.next;
+                }
+                return x;
+            }
+        }
+
+        // 첫번째 요소 추가
+        LinkedList.prototype.addFirst = function (data) {
+            return this.add(0, data);
+        }
+        // data 추가 함수
+        LinkedList.prototype.add = function (index, data) {
+            var node = new Node(data);
+
+            if (index === 0) {
+                var temp = this.head;
+                if (temp === null) {
+                    this.head = node;
+                } else {
+                    node.next = this.head;
+                    this.head = node;
+                }
+                if (this.head.next === null) {
+                    this.tail = this.head;
+                }
+            } else {
+                var temp = this.findNode(index - 1);
+                if (temp.next === null) {
+                    // console.log('index:',index);
+                    temp.next = node;
+                    this.tail = node;
+                    // console.log('tail:', this.tail);
+                } else {
+                    // console.log('temp:',temp);
+                    // console.log('node:', node);
+                    node.next = temp.next;
+                    temp.next = node;
+                }
+            }
+            this.size++;
+        }
+
+        // 마지막 요소 추가
+        LinkedList.prototype.addLast = function (data) {
+            return this.add(this.size, data);
+        }
+
+        // 첫번째 요소 삭제
+        LinkedList.prototype.removeFirst = function () {
+            return this.remove(0);
+        }
+
+        // n번째 요소 삭제
+        LinkedList.prototype.remove = function (index) {
+            if (this.indexChk(index)) {
+                var temp;
+                var removed;
+                if (index === 0) {
+                    temp = this.head;
+                    removed = this.head.data;
+                    this.head = temp.next;
+                } else {
+                    temp = this.findNode(index - 1);
+                    removed = temp.next.data;
+                    if (index === this.size - 1) {
+                        temp.next = null;
+                        this.tail = temp;
+                    } else {
+                        var nodeNext = temp.next;
+                        temp.next = nodeNext.next;
+                        nodeNext = null;
+                    }
+                }
+                this.size--;
+                return removed;
+            }
+        }
+
+        // 마지막 요소 삭제
+        LinkedList.prototype.removeLast = function () {
+            return this.remove(this.size - 1);
+        }
+
+        // 데이터 가져오기
+        LinkedList.prototype.get = function (index) {
+            if (this.indexChk(index)) {
+                var temp = this.findNode(index);
+                return temp.data;
+            }
+        }
+
+        // 데이터 유무 체크
+        LinkedList.prototype.indexOf = function (data) {
+            var temp = this.head;
+            for (var i = 0; i < this.size; i++) {
+                if (temp.data === data) {
+                    return i;
+                }
+                temp = temp.next;
+            }
+            return -1;
+        }
+
+        // 요소 나열
+        LinkedList.prototype.toString = function () {
+            var temp = this.head;
+            var str = '';
+            for (var i = 0; i < this.size; i++) {
+                str += temp.data;
+                str += ' -> ';
+                temp = temp.next;
+            }
+            return str;
+        }
+
+        // 버블 솔트 구현
+        LinkedList.prototype.bubbleSort = function () {
+            for(var i=0; i<this.size-1; i++){
+                var temp = this.head;
+                for(var j=0; j<this.size-(i+1); j++){
+                    if(temp.data > temp.next.data){
+                        this.add(j,this.remove(j+1));
+                    }
+                }
+            }
+        }
+
+        var list = new LinkedList();
+        // list.addFirst(5);
+        list.addFirst(10);
+        list.addLast(1);
+        list.addFirst(20);
+        list.addLast(2);
+        // list.add(1, 25);
+        // list.add(1, 30);
+        console.log(list.toString()); // 10 -> 30 -> 25 -> 5 -> 20 ->
+        // console.log(list.head);
+        // console.log(list.tail);
+        // console.log(list.removeFirst()); // 10
+        // console.log(list.removeLast()); // 20
+        // console.log(list.remove(2)); // 5
+        // console.log(list.toString()); // 30 -> 25 ->
+        // console.log(list.head);
+        // console.log(list.tail);
+        // console.log(list.get(1));
+        // console.log(list.indexOf(25));
+        list.bubbleSort();
+        console.log('bubble:', list.toString());
+        console.log('head:',list.head);
+        console.log('tail:',list.tail);
+    </script>
+</body>
+
+</html>
