@@ -147,39 +147,73 @@
 
         // 버블 솔트 구현
         LinkedList.prototype.bubbleSort = function () {
-            for(var i=0; i<this.size-1; i++){
-                var temp = this.head;
-                for(var j=0; j<this.size-(i+1); j++){
+            var temp = this.head;
+            for (var i = 0; i < this.size - 1; i++) {
+                for (var j = 0; j < this.size-i; j++) {
+                    var temp = this.findNode(j);
                     if(temp.data > temp.next.data){
-                        this.add(j,this.remove(j+1));
+                        console.log('sort: ',j, temp);
+                        if(this.head === temp){
+                            this.headSwap(temp);
+                        } else if(this.tail === this.findNode(j+1)){
+                            this.tailSwap(temp);
+                        } else {
+                            this.swap(this.findNode(j-1));
+                        }
                     }
                 }
             }
+        }
+
+        // this head swap
+        LinkedList.prototype.headSwap = function (head) {
+            var temp = this.head;
+            var nodeNext = head.next;
+            head.next = nodeNext.next;
+            nodeNext.next = head;
+            this.head = nodeNext;
+        }
+
+        // this tail swap
+        LinkedList.prototype.tailSwap = function (node) {
+            var temp = this.tail;
+            var nodeNext = node.next;
+            nodeNext.next = node;
+            this.tail = node;
+            // node.next = null;
+        }
+
+        // 버블 swap
+        LinkedList.prototype.swap = function (node) {
+            var tempPrev = node;
+            var temp = node.next;
+            var tempNext = temp.next;
+            tempPrev.next = tempNext;
+            temp.next = tempNext.next;
+            tempNext.next = temp;
         }
 
         var list = new LinkedList();
         // list.addFirst(5);
         list.addFirst(10);
         list.addLast(1);
-        list.addFirst(20);
-        list.addLast(2);
+        list.addFirst(28);
+        list.addLast(0);
+        list.add(1, 25);
         // list.add(1, 25);
         // list.add(1, 30);
-        console.log(list.toString()); // 10 -> 30 -> 25 -> 5 -> 20 ->
-        // console.log(list.head);
-        // console.log(list.tail);
-        // console.log(list.removeFirst()); // 10
-        // console.log(list.removeLast()); // 20
-        // console.log(list.remove(2)); // 5
-        // console.log(list.toString()); // 30 -> 25 ->
-        // console.log(list.head);
-        // console.log(list.tail);
+        console.log(list.toString()); // 20 -> 25 -> 10 -> 1 -> 2
+        // console.log('head: ',list.head);
+        // console.log('tail: ', list.tail);
+        // console.log('removeF: ', list.removeFirst()); // 10
+        // console.log('removeL: ', list.removeLast()); // 20
+        // console.log('remove[2]: ', list.remove(2)); // 5
         // console.log(list.get(1));
         // console.log(list.indexOf(25));
         list.bubbleSort();
         console.log('bubble:', list.toString());
-        console.log('head:',list.head);
-        console.log('tail:',list.tail);
+        console.log('head:', list.head);
+        console.log('tail:', list.tail);
     </script>
 </body>
 
