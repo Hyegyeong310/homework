@@ -149,59 +149,30 @@
         LinkedList.prototype.bubbleSort = function () {
             var temp = this.head;
             for (var i = 0; i < this.size - 1; i++) {
-                for (var j = 0; j < this.size-i; j++) {
+                for (var j = 0; j < this.size - (i + 1); j++) {
                     var temp = this.findNode(j);
-                    if(temp.data > temp.next.data){
-                        console.log('sort: ',j, temp);
-                        if(this.head === temp){
-                            this.headSwap(temp);
-                        } else if(this.tail === this.findNode(j+1)){
-                            this.tailSwap(temp);
-                        } else {
-                            this.swap(this.findNode(j-1));
-                        }
+                    if (temp.data > temp.next.data) {
+                        this.swap(temp);
                     }
                 }
             }
         }
 
-        // this head swap
-        LinkedList.prototype.headSwap = function (head) {
-            var temp = this.head;
-            var nodeNext = head.next;
-            head.next = nodeNext.next;
-            nodeNext.next = head;
-            this.head = nodeNext;
-        }
-
-        // this tail swap
-        LinkedList.prototype.tailSwap = function (node) {
-            var temp = this.tail;
-            var nodeNext = node.next;
-            nodeNext.next = node;
-            this.tail = node;
-            // node.next = null;
-        }
-
-        // 버블 swap
-        LinkedList.prototype.swap = function (node) {
-            var tempPrev = node;
-            var temp = node.next;
-            var tempNext = temp.next;
-            tempPrev.next = tempNext;
-            temp.next = tempNext.next;
-            tempNext.next = temp;
+        LinkedList.prototype.swap = function (temp) {
+            var tempNext = temp.next.data;
+            temp.next.data = temp.data;
+            temp.data = tempNext;
         }
 
         var list = new LinkedList();
         // list.addFirst(5);
-        list.addFirst(10);
-        list.addLast(1);
+        list.addFirst(0);
+        list.addLast(2);
         list.addFirst(28);
-        list.addLast(0);
-        list.add(1, 25);
+        list.addLast(8);
+        list.add(1, 30);
         // list.add(1, 25);
-        // list.add(1, 30);
+        list.add(1, 18);
         console.log(list.toString()); // 20 -> 25 -> 10 -> 1 -> 2
         // console.log('head: ',list.head);
         // console.log('tail: ', list.tail);
