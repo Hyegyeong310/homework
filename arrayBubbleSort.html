@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var ArrayList = function(){
+		this.array = [];
+		this.length = 0;
+	}
+
+	ArrayList.prototype.addFirst = function(elem){
+		return this.add(0, elem);
+	}
+	ArrayList.prototype.add = function(index, elem){
+		this.array.splice(index, 0, elem);
+		this.length++;
+		return this.length;
+	}
+	ArrayList.prototype.addLast = function(elem){
+		return this.add(this.length, elem);
+	}
+
+	ArrayList.prototype.toString = function(){
+		var str = '';
+		for(var i=0; i<this.length; i++){
+			str += this.array[i];
+			if(i !== this.length-1 ){
+				str += ', ';
+			}
+		}
+		return str;
+	}
+
+	ArrayList.prototype.bubbleSort = function(){
+		for(var i=0; i<this.length; i++){
+			for(var j=0; j<this.length-(i+1); j++){
+				if(this.array[j] > this.array[j+1]){
+					var e1 = this.array[j];
+					this.array[j] = this.array[j+1];
+					this.array[j+1] = e1;
+				}
+			}
+		}
+		return this.array;
+	}
+
+	var arr = new ArrayList();
+	arr.addFirst(10);
+	arr.add(1, 20);
+	arr.add(1, 30);
+	arr.addLast(40);
+	console.log(arr.toString()); // 10, 30, 20, 40 
+	arr.bubbleSort();
+	console.log(arr.toString()); // 10, 20, 30, 40
+
+</script>
+</body>
+</html>

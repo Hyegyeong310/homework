@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var doublyLinkedList = function(){
+		this.head = new Node(null);
+		this.tail = new Node(null);
+		this.size = 0;
+	}
+
+	var Node = function(elem){
+		this.data = elem;
+		this.prev = null;
+		this.next = null;
+	}
+
+	doublyLinkedList.prototype.findNode = function(index){
+		var x;
+		if(index < this.size/2){
+			x = this.head;
+			for(var i=0; i<index; i++){
+				x = x.next;
+			}
+		} else {
+			x = this.tail;
+			for(var i=index-1; i> index; i--){
+				x = x.prev;
+			}
+		}
+		return x;
+	}
+
+	doublyLinkedList.prototype.addFirst = function(elem){
+		var node = new Node(elem);
+		node.next = this.head;
+		if(this.head != null){
+			this.head.prev = node;
+		}
+		this.head = node;
+		this.size++;
+		if(this.head.next.data === null){
+			this.tail = this.head;
+		}
+	}
+
+	doublyLinkedList.prototype.addLast = function(elem){
+		var node = new Node(elem);
+		if(this.size === 0){
+			return this.addFirst(elem);
+		} else {
+			this.tail.next = node;
+			node.prev = this.tail;
+			this.tail = node;
+			this.size++;
+		}
+	}
+
+	doublyLinkedList.prototype.add = function(pos, elem){
+		if(pos === 0){
+			return this.addFirst(elem);
+		} else {
+			var node = new Node(elem);
+			var temp1 = this.findNode(pos-1);
+			var temp2 = temp1.next;
+			temp1.next = node;
+			node.prev = temp1;
+			node.next = temp2;
+			if(temp2 != null){
+				temp2.prev = node;
+			}
+			this.size++;
+			if(node.next === null){
+				this.tail = node;
+			}
+		}
+	}
+
+	doublyLinkedList.prototype.removeFirst = function(){
+		var temp = this.head;
+		this.head = temp.next;
+		var removed = temp.data;
+		temp = null;
+		if(this.head != null){
+			this.head.prev = null;
+		}
+		this.size--;
+		return removed;
+	}
+
+	doublyLinkedList.prototype.remove = function(pos){
+		if(pos === 0){
+			return this.removeFirst();
+		} else {
+			var temp = this.findNode(pos-1);
+			var removed = temp.next;
+			temp.next = removed.next;
+			if(temp.next != null){
+				temp.next.prev = temp;
+			}
+			var removedData = removed.data;
+			if(removed === this.tail){
+				this.tail = temp;
+			}
+			removed = null;
+			this.size--;
+			return removedData;
+		}
+	}
+
+	doublyLinkedList.prototype.removeLast = function(){
+		return this.remove(size-1);
+	}
+
+	doublyLinkedList.prototype.get = function(pos){
+		var temp = this.findNode(pos);
+		return temp.data;
+	}
+
+	doublyLinkedList.prototype.indexOf = function(data){
+		var temp = this.head;
+		var index = 0;
+		while(temp.data != data){
+			temp = temp.next;
+			index++;
+			if(temp === null){
+				return -1;
+			}
+		}
+		return index;
+	}
+
+	doublyLinkedList.prototype.toString = function(){
+		var temp = this.head;
+		var str = '';
+		while (temp){
+			str += temp.data;
+			str += ' -> ';
+			temp = temp.next;
+		}
+		return str;
+	}
+
+	var list = new doublyLinkedList();
+	list.addFirst(5); // 5 ->
+	list.addLast(10); // 5 -> 10 ->
+	list.add(1, 15); // 5 -> 15 -> 10 -> 
+	list.add(1, 20); // 5 -> 20 -> 15 -> 10 ->
+	console.log(list.toString()); 
+	list.remove(0); // 20 -> 15 -> 10 ->
+	console.log(list.toString());
+
+</script>
+</body>
+</html>

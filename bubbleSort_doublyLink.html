@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var doublyLinkedList = function(){
+		this.head = new Node(null);
+		this.tail = new Node(null);
+		this.size = 0;
+	}
+	var Node = function(data){
+		this.data = data;
+		this.prev = null;
+		this.next = null;
+	}
+
+	doublyLinkedList.prototype.findNode = function(index){
+		var x;
+		if(index < this.size/2){
+			x = this.head;
+			for(var i=0; i<index; i++){
+				x = x.next;
+			}
+		} else {
+			x = this.tail;
+			for(var i=index-1; i> index; i--){
+				x = x.prev;
+			}
+		}
+		return x;
+	}
+
+	doublyLinkedList.prototype.addFirst = function(data){
+		var node = new Node(data);
+		node.next = this.head;
+		if(this.head != null){
+			this.head.prev = node;
+		}
+		this.head = node;
+		this.size++;
+		if(this.head.next.data === null){
+			this.tail = this.head;
+		}
+	}
+
+	doublyLinkedList.prototype.add = function(index, data){
+		var node = new Node(data);
+		if(index === 0){
+			return addFirst(data);
+		} else {
+			var temp1 = this.findNode(index-1);
+			var temp2 = temp1.next;
+			temp1.next = node;
+			node.prev = temp1;
+			node.next = temp2;
+			if(temp2 != null){
+				temp2.prev = node;
+			}
+			this.size++;
+			if(node.next === null){
+				this.tail = node;
+			}
+		}	
+	}
+
+	doublyLinkedList.prototype.addLast = function(data){
+		var node = new Node(data);
+		if(this.size === 0){
+			return this.addFirst(data);
+		} else {
+			this.tail.next = node;
+			node.prev = this.tail;
+			this.tail = node;
+			this.size++;
+		}
+	}
+
+	doublyLinkedList.prototype.removeFirst = function(){
+		var temp = this.head;
+		this.head = temp.next;
+		var removed = temp.data;
+		temp = null
+		if(this.head != null){
+			this.head.prev = null;
+		}
+		this.size--;
+		return removed;
+	}
+
+	doublyLinkedList.prototype.remove = function(pos){
+		if(pos === 0){
+			return this.removeFirst();
+		} else {
+			var temp = this.findNode(pos-1);
+			var removed = temp.next;
+			temp.next = removed.next;
+			if(temp.next != null){
+				temp.next.prev = temp;
+			}
+			var removedData = removed.data;
+			if(removed === this.tail){
+				this.tail = temp;
+			}
+			removed = null;
+			this.size--;
+			return removedData;
+		}
+	}
+
+	doublyLinkedList.prototype.removeLast = function(){
+		return this.remove(this.size-1);
+	}
+
+	doublyLinkedList.prototype.bubbleSort = function(){
+		var temp = this.head;
+		for(var i = 0; i < this.size; i++){
+			for(var j=1; j < this.size-(i+1); j++){
+				if (temp.next.next === null) {
+					this.tail = temp.next;
+					break;
+				}
+				this.swap(this.findNode(j), this.findNode(j+1));
+				temp = temp.next;
+			}
+		}
+	}
+
+	doublyLinkedList.prototype.swap = function(node1, node2){
+		if(node1.data === node2.data){
+			return;
+		}
+		if(node1.next === node2){
+			node1.next = node2.next;
+			node2.prev = node1.prev;
+			if(node1.next != null){
+				node1.next.prev = node1;
+			}
+			if(node2.prev != null){
+				node1.prev.next = node2;
+			}
+			node2.next = node1;
+			node1.prev = node2;
+		} else {
+			var node2Prev = node2.prev;
+			var node2Next = node2.next;
+
+			node2.prev = node1.prev;
+			node2.next = node1.next;
+
+			node1.prev = node2Prev;
+			node1.next = node2Next;
+
+			if(node2.next != null){
+				node2.next.prev = node2;
+			}
+			if(node2.prev != null){
+				node2.prev.next = node2;
+			}
+
+			if(node1.next != null){
+				node1.next.prev = node1;
+			}
+			if(node1.prev != null){
+				node1.prev.next = node1;
+			}
+		}
+	}
+
+	doublyLinkedList.prototype.get = function(index){
+		var temp = this.findNode(index);
+		return temp.data;
+	}
+
+	doublyLinkedList.prototype.toString = function(){
+		var temp = this.head;
+		var str = '';
+		while(temp){
+			str += temp.data;
+			str += ' <-> ';
+			temp = temp.next;
+		}
+		return str;
+	}
+
+	var list = new doublyLinkedList();
+	list.addFirst(0);
+	list.addFirst(1);
+	list.addLast(5);
+	list.add(2, 10);
+	console.log(list.toString()); // 1 -> 0 -> 10 -> 5 ->
+	list.bubbleSort();
+	console.log(list.toString()); // 0 -> 1 -> 5 -> 10 ->
+</script>
+</body>
+</html>
