@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Square Roots: Approximation</title>
+</head>
+
+<body>
+    <script>
+        function approxRoot(n) {
+            // your code here
+            var i = 0;
+            var iRange;
+            while (n > Math.pow(i,2)) {
+                i++;
+            }
+            if (n < Math.pow(i,2)) {
+                iRange = i;
+                i = i - 1;
+                i = i + (n - Math.pow(i,2)) / (Math.pow(iRange,2) - Math.pow(i,2));
+                i = Number(i.toFixed(2));
+            }
+            return i;
+        }
+        console.log(approxRoot(2)); // 1.33
+        console.log(approxRoot(5)); // 2.2
+        console.log(approxRoot(401)); // 20.02
+    </script>
+</body>
+
+</html>
