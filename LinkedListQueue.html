@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var LinkedList = function(){
+            this.front = null;
+            this.back = null;
+        }
+        var Node = function(data){
+            this.data = data;
+            this.next = null;
+        }
+        var Queue = function(){
+            Queue.prototype = new LinkedList();
+            this.size = 0;
+        }
+        
+        // Queue 비어있는지 체크
+        Queue.prototype.isEmpty = function(){
+            if(this.size === 0){
+                return true;
+            }
+            return false;
+        }
+
+        // Queue front 확인
+        Queue.prototype.frontCheck = function(){
+            return this.front;
+        }
+
+        // Queue back 확인
+        Queue.prototype.backCheck = function(){
+            return this.back;
+        }
+
+        // Queue 원소 삽입
+        Queue.prototype.push = function(data){
+            var node = new Node(data);
+            var temp = this.front;
+            if(this.isEmpty()){
+                this.front = node;
+                this.back = node;
+            } else {
+                node.next = temp;
+                this.front = node;
+            }
+            this.size++;
+            return this.size;
+        }
+
+        // Queue 원소 삭제
+        Queue.prototype.pop = function(){
+            var temp = this.front;
+            var removedData = this.back.data;
+            for(var i=0; i< this.size-1; i++){
+                if(i === this.size-2){
+                    this.back = temp;
+                }
+                temp = temp.next;
+            }
+            temp.next = null;
+            this.size--;
+            return removedData;
+        }
+
+        // Queue 원소 보기
+        Queue.prototype.toString = function(){
+            var temp = this.front;
+            var str = '';
+            for(var i =0; i< this.size; i++){
+                str += temp.data + ' -> ';
+                temp = temp.next;
+            }
+            console.log(str);
+            return str;
+        }
+
+        var queue = new Queue();
+        queue.push(10);
+        queue.toString(); // 10 -> 
+        queue.push(13);
+        queue.toString(); // 13 -> 10 -> 
+        queue.push(20);
+        queue.toString(); // 20 -> 13 -> 10 ->
+        queue.pop();
+        queue.toString(); // 20 -> 13 -> 
+    </script>
+</body>
+</html>
