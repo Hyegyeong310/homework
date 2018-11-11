@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List Stack</title>
+</head>
+<body>
+    <script>
+        var LinkedList = function(){
+            this.top = null;
+        }
+        var Node = function(data){
+            this.data = data;
+            this.next = null;
+        }
+        
+        var Stack = function(){
+            Stack.prototype = new LinkedList();
+            this.size = 0;
+        }
+
+        // 가장 상단 데이터 가져와서 삭제
+        Stack.prototype.pop = function(){
+            var temp = this.top;
+            var tempData = temp.data;
+            this.top = temp.next;
+            this.size--;
+            // console.log('pop:',tempData);
+            return tempData;
+        }
+
+        // 상단 데이터 가져옴
+        Stack.prototype.peek = function(){
+            var top = this.top.data;
+            // console.log('top:',top);
+            return top;
+        }
+
+        // 스택이 비었는지 확인
+        Stack.prototype.isEmpty = function(){
+            var size = this.stackSize();
+            if( size === 0){
+                return true;
+            }
+            return false;
+        }
+
+        // 데이터를 스택에 삽입
+        Stack.prototype.push = function(data){
+            var temp = this.top;
+            var node = new Node(data);
+            this.top = node;
+            node.next = temp;
+            this.size++;
+            return this.size;
+        }
+
+        // 사이즈 리턴
+        Stack.prototype.stackSize = function(){
+            var size = this.size;
+            // console.log('size:', size);
+            return size;
+        }
+        
+        // Stack 내용보기
+        Stack.prototype.toString = function(){
+            var temp = this.top;
+            var str = '';
+            for(var i=0; i<this.size; i++){
+                str += temp.data;
+                if(i !== this.size-1){
+                    str += '\n';
+                }
+                temp = temp.next;
+            }
+            console.log(str);
+            return str;
+        }
+
+        var stack = new Stack();
+        stack.push(5);
+        stack.push(10);
+        stack.push(15);
+        stack.toString();
+        stack.pop();
+        stack.pop();
+        stack.push(2);
+        stack.toString();
+        stack.peek();
+        stack.stackSize();
+    </script>
+</body>
+</html>
