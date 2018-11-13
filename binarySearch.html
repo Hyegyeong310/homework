@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ArrayList class
+        var ArrayList = function(){
+            this.array = [];
+            this.size = 0;
+ 
+        }
+
+        // 첫번째 위치에 요소 추가
+        ArrayList.prototype.pushFirst = function(data){
+            return this.push(0, data);
+        }
+        // 원하는 위치에 요소 추가
+        ArrayList.prototype.push = function(index ,data){
+            this.array.splice(index, 0, data);
+            this.size++;
+            return this.size;
+        }
+        // 마지막 위치에 요소 추가
+        ArrayList.prototype.pushLast = function(data){
+            return this.push(this.size, data);
+        }
+        
+        // 첫번째 요소 삭제
+        ArrayList.prototype.popFirst = function(){
+            var removed = this.array.shift();
+            this.size--;
+            return removed;
+        }
+        // 원하는 요소 삭제
+        ArrayList.prototype.pop = function(index){
+            var removed = this.array[index];
+            this.array.splice(index,1);
+            return removed;
+        }
+        // 마지막 요소 삭제
+        ArrayList.prototype.popLast = function(){
+            var removed = this.array.pop();
+            this.size--;
+            return removed;
+        }
+
+        // 데이터 위치 찾기
+        ArrayList.prototype.indexOf = function(data){
+            for(var i=0; i<this.size; i++){
+                if(data === this.array[i]){
+                    return i;
+                }
+            }
+            return -1; // 없으면 -1 리턴
+        }
+
+        // index에 따른 데이터 찾기
+        ArrayList.prototype.findData = function(index){
+            if(index >= 0 && index < this.size){
+                return this.array[index];
+            } else {
+                return new RangeError('Index out of range');
+            }
+        }
+
+        // 배열 정렬
+        ArrayList.prototype.sort = function(){
+            this.array.sort(function(a,b){
+                return a-b;
+            });
+        }
+
+        // 이진탐색
+        ArrayList.prototype.binarySearch = function(data, first, last){
+            var middleIndex = 0;
+            while(first <= last){
+                middleIndex = Math.floor((first+last)/2);
+                if(data === this.array[middleIndex]){
+                    return middleIndex;
+                } else {
+                    if(data < this.array[middleIndex]){
+                        return this.binarySearch(data, first, middleIndex-1);
+                    } else {
+                        return this.binarySearch(data, middleIndex+1, last);
+                    }
+                }
+            }
+            return -1;
+        }
+
+        // 요소 보여주기
+        ArrayList.prototype.toString = function(){
+            var str = '[';
+            for(var i=0; i<this.size; i++){
+                str += this.array[i];
+                if(i !== this.size-1){
+                    str += ', ';
+                }
+            }
+            str += ']';
+            console.log(str);
+            return str;
+        }
+
+        var list = new ArrayList();
+        list.pushFirst(11);
+        list.pushFirst(9);
+        list.push(0, 5);
+        list.pushLast(3);
+        list.pushLast(12);
+        list.pushLast(6);
+        list.pushLast(8);
+        list.pushLast(2);
+        list.toString(); // [5, 9, 11, 3, 12, 6, 8, 2]
+        console.log(list.indexOf(1)); // -1
+        console.log(list.findData(2)); // 11
+        list.sort();
+        list.toString(); // [2, 3, 5, 6, 8, 9, 11, 12]
+        console.log(list.binarySearch(9, 0, list.size-1)); // 7
+    </script>
+</body>
+</html>
