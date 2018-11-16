@@ -7,7 +7,7 @@
 <img src="https://t1.daumcdn.net/cfile/tistory/256B9C34545081D835"><br>
 > (출처: 배고파서 까먹고 만든 블로그)
 
-JavaScript로 데이터 추가에 대한 구현은 다음과 같다.
+JavaScript로 선택정렬에 대한 구현은 다음과 같다.
 ``` javascript
 // 값 교환해주는 함수
 var swap = function(arr, index1, index2){
@@ -41,7 +41,7 @@ var selectionSort = function (arr) {
 <img src="https://t1.daumcdn.net/cfile/tistory/2569FD3854508BE811"><br>
 > (출처: 배고파서 까먹고 만든 블로그)
 
-JavaScript로 데이터 추가에 대한 구현은 다음과 같다.
+JavaScript로 삽입정렬에 대한 구현은 다음과 같다.
 ``` javascript
 // 값 교환해주는 함수
 var swap = function (arr, index1, index2) {
