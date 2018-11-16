@@ -8,7 +8,7 @@
 <img src="https://t1.daumcdn.net/cfile/tistory/262CCF4657D6D0352E"><br>
 > (출처: Hanmo's IT)
 
-JavaScript로 데이터 추가에 대한 구현은 다음과 같다.
+JavaScript로 이진탐색에 대한 구현은 다음과 같다.
 ``` javascript
 // 배열 정렬
 ArrayList.prototype.sort = function(){
