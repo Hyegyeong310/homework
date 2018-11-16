@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        var randomArray = [234, 45634, 23, 41, 2345, 34, 23, 1, 4, 3, 6, 234, 4536, 55, 234, 23, 456, 45, 234, 1, 856, 9, 67, 56, 7];
+
+        var swap = function (arr, index1, index2) {
+            var temp = arr[index1];
+            arr[index1] = arr[index2];
+            arr[index2] = temp;
+        }
+
+        var insertionSort = function(arr){
+            for(var i=1; i<arr.length; i++){
+                if(arr[i-1] > arr[i]){
+                    for(var j=0; j<i; j++){
+                        if(arr[j]> arr[i]){
+                            swap(arr, i, j);
+                        }
+                    }
+                }
+            }
+        }
+
+        console.log(randomArray);
+        insertionSort(randomArray);
+        console.log(randomArray);
+    </script>
+</body>
+
+</html>
