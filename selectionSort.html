@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Selection Sort</title>
 </head>
+
 <body>
     <script>
-        var randomArray = [234,45634,23,41,2345,34,23,1,4,3,6,234,4536,55,234,23,456,45,234,1,856,9,67,56,7];
+        var randomArray = [234, 45634, 23, 41, 2345, 34, 23, 1, 4, 3, 6, 234, 4536, 55, 234, 23, 456, 45, 234, 1, 856, 9, 67, 56, 7];
 
-        var swap = function(arr, index1, index2){
+        var swap = function (arr, index1, index2) {
             var temp = arr[index1];
             arr[index1] = arr[index2];
             arr[index2] = temp;
         }
 
-        var selectionSort = function(arr){
-            var minElem;
-            for(var i=0; i<arr.length; i++){
-                for(var j=i+1; j<arr.length; j++){
-                    minElem = arr[i];
+        var selectionSort = function (arr) {
+            var minElem, temp;
+            for (var i = 0; i < arr.length; i++) {
+                minElem = arr[i];
+                temp = i;
+                for (var j = i + 1; j < arr.length; j++) {
                     if(minElem > arr[j]){
-                        swap(arr, i, j);
+                        minElem = arr[j];
+                        temp = j;
                     }
                 }
+                swap(arr, i, temp);
             }
             return arr;
         }
@@ -30,4 +35,5 @@
         console.log(selectionSort(randomArray.slice()));
     </script>
 </body>
+
 </html>
