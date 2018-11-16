@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Selection Sort</title>
 </head>
 <body>
     <script>
@@ -24,10 +24,10 @@
                     }
                 }
             }
+            return arr;
         }
         console.log(randomArray);
-        selectionSort(randomArray);
-        console.log(randomArray);
+        console.log(selectionSort(randomArray.slice()));
     </script>
 </body>
 </html>
