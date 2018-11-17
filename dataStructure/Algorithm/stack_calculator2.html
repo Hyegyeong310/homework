@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script>
+	// 연산자의 연산 우선순위
+	function getOpPrec(op) 
+	{ 
+    	switch (op)
+    	{
+	        case '*':
+	        case '/':
+	            return 5;
+	        case '+':
+	        case '-':
+	            return 3;    
+	        case '(': 
+	            return 1;    
+    	}
+
+    	return -1;
+	}
+
+	// 연산자의 우선순위 비교
+	function whoPrecOp(op1, op2) 
+	{
+	    return getOpPrec(op1) >= getOpPrec(op2);    // op1의 연산순위가 높거나 같다면 참
+	}
+
+	function postfixNotation(exp) 
+	{  
+	    var stack = [], convExp = [], tok, popOp; 
+	    exp = exp.replace(/\s/g, '').match(/[\d\.]+|[^\d\.]/g).reverse();  // 공백제거 및  배열로 분리
+
+    	while (tok = exp.pop()) {    
+        	// 숫자가 아니라면(연산자라면) 
+        	if (isNaN(tok)) {    
+            	switch (tok)
+            	{
+	                case '(':
+	                    stack.push(tok);
+	                    break;
+	                case ')':
+	                    while (1) {
+	                        popOp = stack.pop();
+	                        if ( popOp == '(' )
+	                            break;
+	                        convExp.push(popOp);
+	                    }
+	                    break;
+	                case '+': case '-':
+	                case '*': case '/':
+	                    while (stack.length && whoPrecOp(stack[stack.length-1], tok))
+	                        convExp.push(stack.pop());
+	                    stack.push(tok);
+	                    break;
+            	}
+        	} else     // 숫자라면(피연산자라면)
+            	convExp.push(tok); 
+    	}          
+    	while (stack.length)  
+        	convExp.push(stack.pop());    
+
+    	return convExp;  
+	}
+
+	function evalPostfixNotation(exp) 
+	{
+	    var i, tok, n1, n2, stack = [];
+	    for (i in exp) {   
+	        tok = exp[i];
+	        // 연산자라면 
+	        if (isNaN(tok)) {
+	            n2 = Number(stack.pop());
+	            n1 = Number(stack.pop());
+
+	            switch (tok)
+	            {
+	                case '*':
+	                    stack.push(n1 * n2);
+	                    break;
+	                case '/':
+	                    stack.push(n1 / n2);
+	                    break;
+	                case '+':
+	                    stack.push(n1 + n2);
+	                    break;
+	                case '-':
+	                    stack.push(n1 - n2);
+	                    break;
+            	}
+	        } else     // 숫자라면            
+	            stack.push(tok);
+	    } 
+	    return stack.pop();
+	}
+
+	document.write( evalPostfixNotation(postfixNotation( '((3.5 - 2) + 3.4) * (14 - 10)' )));
+	</script>
+</body>
+</html>

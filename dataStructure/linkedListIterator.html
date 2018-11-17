@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+</head>
+<body>
+    <script>
+        // LinkedList 객체
+        var LinkedList = function(){
+            this.head = null;
+            this.tail = null;
+            this.size = 0;
+        }
+        // Node 객체
+        var Node = function(data){
+            this.data = data;
+            this.next = null;
+        }
+
+        // node 찾기
+        LinkedList.prototype.findNode = function(index){
+            var temp = this.head;
+            for(var i=0; i<index; i++){
+                temp = temp.next;
+            }
+            return temp;
+        }
+
+        // 해당 index의 data 찾기
+        LinkedList.prototype.get = function(index){
+            if(index >= 0 && index < this.size){
+                var temp = this.findNode(index);
+                return temp.data;
+            } 
+        }
+
+        // 데이터 유무 검색
+        LinkedList.prototype.indexOf = function(data){
+            for(var i=0; i<this.size; i++){
+                if(this.get(i) === data){
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        // 첫번째 자리 요소 추가
+        LinkedList.prototype.addFirst = function(data){
+            var node = new Node(data);
+            var temp = this.head;
+            if(temp === null){
+                this.head = node;
+            } else {
+                node.next = temp;
+                this.head = node;
+            }
+            if(this.head.next === null){
+                this.tail = this.head;
+            }
+            this.size++;
+        }
+
+        // 원하는 자리에 요소 추가
+        LinkedList.prototype.add = function(index, data){
+            if(index === 0){
+                return addFirst(data);
+            }
+            var temp = this.findNode(index-1);
+            var node = new Node(data);
+            node.next = temp.next;
+            temp.next = node;
+            if(node.next === null){
+                this.tail = node;
+            }
+            this.size++;
+        }
+
+        // 마지막 자리에 요소 추가
+        LinkedList.prototype.addLast = function(data){
+            return this.add(this.size, data);
+        }
+
+        // 첫번째 요소 삭제
+        LinkedList.prototype.removeFirst = function(){
+            return this.remove(0);
+        }
+
+        // 원하는 위치 요소 삭제
+        LinkedList.prototype.remove = function(index){
+            var temp, tempNext, removed;
+            if(index === 0){
+                temp = this.head;
+                removed = temp.data;
+                this.head = temp.next;
+            } else {
+                temp = this.findNode(index-1);
+                tempNext = temp.next;
+                removed = tempNext.data;
+                temp.next = tempNext.next;
+            }
+            if(temp.next === null){
+                this.tail = temp;
+            }
+            this.size--;
+            return removed;
+        }
+
+        // 마지막 요소 삭제
+        LinkedList.prototype.removeLast = function(){
+            return this.remove(this.size-1);
+        }
+
+        // node show
+        LinkedList.prototype.toString = function(){
+            var temp = this.head;
+            var str = '';
+            for(var i=0; i<this.size; i++){
+                str += temp.data;
+                str += ' -> ';
+                temp = temp.next;
+            }
+            console.log(str);
+            return str;
+        }
+
+        // LinkedList 길이
+        LinkedList.prototype.listSize = function(){
+            return this.size;
+        }
+
+        var list = new LinkedList();
+        list.addFirst(1);
+        list.addFirst(2);
+        list.addFirst(3);
+        list.addLast(5);
+        list.add(1,4);
+        list.add(1,8);
+        list.add(1,6);
+        console.log(list.removeFirst()); // 3
+        console.log(list.removeLast()); // 5
+        console.log(list.remove(1)); // 2
+        list.toString(); // 3 -> 4 -> 2 -> 1 -> 5 ->
+        console.log('head: ', list.head);
+        console.log('tail: ', list.tail);
+        console.log('get: ', list.get(1));
+        console.log('indexOf: ', list.indexOf(2));
+        console.log('size: ', list.listSize());
+
+    </script>
+</body>
+</html>

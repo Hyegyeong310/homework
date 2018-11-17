@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+</head>
+
+<body>
+    <script>
+        // callback
+        var a = 5;
+        function callbackFunc(num) {
+            console.log('num: ', num);
+        }
+        function mainFunc(elem, callback) {
+            callback(elem);
+        }
+
+        mainFunc(a, callbackFunc); // num: 5
+
+        // clouser
+        var arr = [];
+        function useClouser() {
+            for (var i = 0; i < 5; i++) {
+                arr[i] = function () {
+                    return i;
+                }();
+            }
+            return 'arr:' + arr;
+        }
+        var output = useClouser();
+        console.log(output) // arr: [0,1,2,3,4];
+
+    </script>
+</body>
+
+</html>

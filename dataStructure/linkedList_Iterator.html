@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<script type="text/javascript">
+	var LinkedList = function(){
+		this.head = null;
+		this.tail = null;
+		this.size = 0;
+	}
+	var Node = function(data){
+		this.data = data;
+		this.next = null;		
+	}
+
+	LinkedList.prototype.findNode = function(index){
+		var x = this.head;
+		for(var i=0; i<index; i++){
+			x = x.next;
+		}
+		return x;
+	}
+
+	LinkedList.prototype.addFirst = function(elem){
+		var node = new Node(elem);
+		if(this.head === null){
+			this.head = node;
+		} else {
+			node.next = this.head;
+			this.head = node;
+		}
+		if(this.size === 0){
+			this.tail = this.head;
+		} else if(node.next === null){
+			this.tail = node;
+		}
+
+		this.size++;
+	}
+
+	LinkedList.prototype.add = function(index, elem){
+		if(index === 0){
+			return this.addFirst(elem);
+		} else {
+			var temp = this.findNode(index-1);
+			var tempNext = temp.next;
+			var node = new Node(elem);
+			temp.next = node;
+			node.next = tempNext;
+			if(node.next === null){
+				this.tail = node;
+			}
+			this.size++;
+		}
+	}
+
+	LinkedList.prototype.addLast = function(elem){
+		return this.add(this.size, elem);
+	}
+
+	LinkedList.prototype.removeFirst = function(){
+		var temp = this.head;
+		var removed = temp.data;
+		this.head = temp.next;
+		temp = null;
+		this.size--;
+		return removed;
+	}
+
+	LinkedList.prototype.remove = function(index){
+		if(index < 0 || index > this.size-1){
+			return;
+		}
+		var temp = this.findNode(index-1);
+		var tempNext = temp.next;
+		var removed = tempNext.data;
+		if(index === 0){
+			return this.removeFirst();
+		}else {
+			temp.next = tempNext.next;
+			tempNext = null;
+		}
+		if(temp.next === null){
+			this.tail = temp;
+		}
+		this.size--;
+		return removed;
+	}
+
+	LinkedList.prototype.removeLast = function(){
+		return this.remove(this.size-1);
+	}
+
+	LinkedList.prototype.get = function(index){
+		var value = this.findNode(index);
+		return value.data;
+	}
+
+	LinkedList.prototype.indexOf = function(data){
+		for(var i =0; i<this.size; i++){
+			var val = this.get(i);
+			console.log(val);
+			if(val === data){
+				return i;
+			} else {
+				return -1;
+			}
+		}
+	}
+
+	LinkedList.prototype.toString = function(){
+		var temp = this.head;
+		var str = '';
+		for(var i=0; i<this.size; i++){
+			str += temp.data;
+			str += ' -> ';
+			temp = temp.next;
+		}
+		return str;
+	}
+
+	var list = new LinkedList();
+	list.addFirst(5);
+	list.addFirst(10);
+	list.addFirst(15);
+	list.add(1,20);
+	list.addLast(25);
+	list.addLast(30);
+	console.log(list.removeFirst()); // 15
+	console.log(list.remove(1)); // 10
+	console.log(list.removeLast()); // 30
+	// console.log(list.findNode(0)); // node(15);
+	console.log(list.toString()); // 15 -> 20 -> 10 -> 5 -> 25 -> 30 ->
+	console.log(list.get(1));
+	console.log(list.indexOf(5));
+
+</script>
+</body>
+</html>
