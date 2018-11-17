@@ -6,7 +6,27 @@
 </head>
 <body>
     <script>
-    
+        var randomArray = [234, 45634, 23, 41, 2345, 34, 23, 1, 4, 3, 6, 234, 4536, 55, 234, 23, 456, 45, 234, 1, 856, 9, 67, 56, 7];
+        var QuickSort = function(arr){
+            var newArr = arr.slice(); // arr copy
+            var len = newArr.length; // 배열 길이
+            if(len === 0){ // 빈 배열이면 [] 리턴
+                return [];
+            }
+            var pivot = newArr[0]; // 피봇은 arr의 0번 인덱스 요소
+            var left = [], right = []; // left 빈배열 할당, right 빈배열 할당
+            for(var i = 1; i<len; i++){ // 피봇 제외 다음 인덱스부터 마지막 인덱스까지
+                if(newArr[i] < pivot){ // 피봇보다 작으면
+                    left.push(newArr[i]); // left push
+                } else {
+                    right.push(newArr[i]); // 크거나 같으면 right push
+                }
+            }
+            return QuickSort(left).concat(pivot, QuickSort(right)); // 재귀함수 이용 빈배열이 나올 때까지 반복 후 concat으로 하나의 배열 리턴
+        }
+
+        console.log(randomArray);
+        console.log(QuickSort(randomArray));
     </script>
 </body>
 </html>
