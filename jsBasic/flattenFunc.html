@@ -10,7 +10,7 @@
   <script>
     function flatten(array) {
       //your solution here
-      var arr = array.slice();
+      var arr = array.slice(); // array copy
 
       /*
       var result = arr.reduce(function(accu, curr){
@@ -21,17 +21,17 @@
       */
 
       var result = [];
-      var arrayChk = function (arr) {
-        for (var elem of arr) {
-          if (!Array.isArray(elem)) {
-            result.push(elem);
+      var arrayChk = function (arr) { // arr를 인자로 받음
+        for (var elem of arr) { // arr 전체 요소 루프
+          if (!Array.isArray(elem)) { // elem이 array가 아니면
+            result.push(elem); // result에 push
           } else {
-            arrayChk(elem);
+            arrayChk(elem); // arrayChk 재귀함수
           }
         }
-        return result;
+        return result; // 하나로 합친 배열 리턴
       }
-      return arrayChk(arr);
+      return arrayChk(arr); // arrayChk의 리턴값 리턴
     }
 
     var input1 = ['abcd','[1,2,3]',['[]'],[null,[null]],[true,false]];
