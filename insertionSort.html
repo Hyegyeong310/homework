@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Selection Sort</title>
+    <title>Insertion Sort</title>
 </head>
 
 <body>
@@ -16,23 +16,21 @@
             arr[index2] = temp;
         }
 
-        var selectionSort = function (arr) {
-            var minElem, temp;
-            for (var i = 0; i < arr.length; i++) {
-                minElem = arr[i];
-                temp = i;
-                for (var j = i + 1; j < arr.length; j++) {
-                    if(minElem > arr[j]){
-                        minElem = arr[j];
-                        temp = j;
+        var insertionSort = function(arr){
+            for(var i=1; i<arr.length; i++){
+                if(arr[i-1] > arr[i]){
+                    for(var j=0; j<i; j++){
+                        if(arr[j]> arr[i]){
+                            swap(arr, i, j);
+                        }
                     }
                 }
-                swap(arr, i, temp);
             }
             return arr;
         }
+
         console.log(randomArray);
-        console.log(selectionSort(randomArray.slice()));
+        console.log(insertionSort(randomArray.slice()));
     </script>
 </body>
 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Merge Sort</title>
+</head>
+<body>
+    <script>
+        var randomArray = [234, 45634, 23, 41, 2345, 34, 23, 1, 4, 3, 6, 234, 4536, 55, 234, 23, 456, 45, 234, 1, 856, 9, 67, 56, 7];
+
+        var mergeSort = function(arr){
+            var len = arr.length;
+            if(len === 1){
+                return arr;
+            }
+            var middle = Math.floor(len/2);
+            var left = arr.slice(0, middle);
+            var right = arr.slice(middle);
+            var merge = function(left, right){
+                var result = [];
+                while(left.length && right.length){
+                    if(left[0] <= right[0]){
+                        result.push(left.shift());
+                    } else {
+                        result.push(right.shift());
+                    }
+                }
+                while(left.length){
+                    result.push(left.shift());
+                }
+                while(right.length){
+                    result.push(right.shift());
+                }
+                return result;
+            }
+            return merge(mergeSort(left), mergeSort(right));
+        }    
+        
+        console.log(randomArray);
+        console.log(mergeSort(randomArray));    
+    </script>
+</body>
+</html>
