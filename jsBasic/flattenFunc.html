@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Flatten Function</title>
+</head>
+
+<body>
+  <script>
+    function flatten(array) {
+      //your solution here
+      var arr = array.slice();
+
+      /*
+      var result = arr.reduce(function(accu, curr){
+        return accu.concat(curr);
+      },[]);
+      
+      return result;
+      */
+
+      var result = [];
+      var arrayChk = function (arr) {
+        for (var elem of arr) {
+          if (!Array.isArray(elem)) {
+            result.push(elem);
+          } else {
+            arrayChk(elem);
+          }
+        }
+        return result;
+      }
+      return arrayChk(arr);
+    }
+
+    var input1 = ['abcd','[1,2,3]',['[]'],[null,[null]],[true,false]];
+    console.log(flatten(input1)); // ["abcd", "[1,2,3]", "[]", null, null, true, false]
+    var input2 = [1, 2, [3], [4, [1, 2, 3, [null, [false, true]]]]];
+    console.log(flatten(input2)); // [ 1, 2, 3, 4, 1, 2, 3, null, false, true ]
+  </script>
+</body>
+
+</html>
