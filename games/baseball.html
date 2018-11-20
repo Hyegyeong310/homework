@@ -18,10 +18,13 @@
             }
             choice.push(String(numArr[random]));
         }
-        console.log(choice);
         for (var count = 0; count < 10; count++) {
             userInput = prompt('숫자 4개 입력: ');
-            while (isNaN(Number(userInput))) {
+            if(!userInput){
+                alert('게임 종료');
+                break;
+            }
+            while (isNaN(Number(userInput)) || (userInput.length !== 4)) {
                 userInput = prompt('다시 입력: ');
             }
             userInput = userInput.split('');
