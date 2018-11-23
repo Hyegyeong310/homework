@@ -26,8 +26,9 @@
             return x * factorial2(x - 1);
         }
         factorial2(5); // 120
+        factorial2(7); // 5040
 
-        // 재귀함수 + Memoization + IIFE
+        // 재귀함수 + Memoization + IIFE (factorial)
         var factorial3 = (function(){
             var save = {};
             var fact = function(num){
@@ -45,6 +46,26 @@
         })();
         console.log(factorial3(5)); // 120
         console.log(factorial3(7)); // 5040
+
+        // 재귀함수 + Memoization + IIFE (fibonacci)
+        var fibonacci = (function(){
+            var save = {};
+            var fibo = function(num){
+                if(num < 2){
+                    return num;
+                } else {
+                    var saved1 = save[num-2]? save[num-2] : fibo(num-2);
+                    var saved2 = save[num-1]? save[num-1] : fibo(num-1);
+                    var result = saved1 + saved2;
+                    save[num] = result;
+                    console.log(`saved1: ${saved1}, saved2: ${saved2}, result: ${result}`);
+                    return result;
+                }
+            }
+            return fibo;
+        })();
+        console.log(fibonacci(5)); // 1, 2, 3, 5
+        console.log(fibonacci(7)); // 8, 13
     </script>
 </body>
 
