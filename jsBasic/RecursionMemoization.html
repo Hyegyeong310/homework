@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recursion and Memoization</title>
+</head>
+
+<body>
+    <script>
+        // 재귀함수 사용 X
+        var factorial1 = function (x) {
+            var result = 1;
+            for (var i = x; i > 0; i--) {
+                result *= i;
+            }
+            return result;
+        }
+        factorial1(5); // 120
+
+        // 재귀함수 사용 O
+        var factorial2 = function (x) {
+            if (x === 0) {
+                return 1;
+            }
+            return x * factorial2(x - 1);
+        }
+        factorial2(5); // 120
+
+        // 재귀함수 + Memoization + IIFE
+        var factorial3 = (function(){
+            var save = {};
+            var fact = function(num){
+                if(num > 0){
+                    var saved = save[num-1] ? save[num-1] : fact(num-1);
+                    var result = num * saved;
+                    save[num] = result;
+                    console.log(`saved: ${saved}, result: ${result}`);
+                    return result;
+                } else {
+                    return 1;
+                }
+            }
+            return fact;
+        })();
+        console.log(factorial3(5)); // 120
+        console.log(factorial3(7)); // 5040
+    </script>
+</body>
+
+</html>
