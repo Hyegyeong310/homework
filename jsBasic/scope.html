@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Scope</title>
+</head>
+
+<body>
+    <script>
+        // slide1
+        var greeting = 'Hello'; // greeting 전역변수 선언, 'Hello' 할당
+        function greetSomeone() { // greetSomeone 선언식 함수
+            var firstName = 'Josh'; // 지역변수 firstName 선언, 'Josh' 할당 
+            return greeting + ' ' + firstName; // 전역변수 greeting + '' 지역변수 fitstName 리턴
+            // 'Hello Josh'
+        }
+        greetSomeone(); // => ??? // 'Hello Josh'
+        // firstName; // => ??? // referrence error. firstName은 전역변수로 선언된 적 없음.
+
+        // slide2
+        var name = "Richard"; // 전역변수 name 선언, 'Richard' 할당
+
+        function showName() { // 선언식 함수 showName
+            var name = "Jack"; // 지역 변수 name 선언, 'Jack'할당
+            // showName 함수 안에서만 접근 가능
+            console.log(name); // ?? // 콘솔 'Jcak', 리턴값 undefined
+        }
+
+        console.log(name); // ?? // 'Richard'
+        showName(); // 'Jack'
+        console.log(name); // ?? // 'Richard'
+
+        // slide3
+        var name = "Richard"; // 전역변수 name 선언, 'Richard' 할당
+        // 아래의 if문은 name변수에 대한
+        // local scope를 생성하지 않는다.
+        if (name) { // if문은 함수가 아니다! name에 'Richard' 값이 있기 때문에 truthy 값. if문 실행
+            name = "Jack"; // 전역변수 name에 'Jack' 재할당
+            console.log(name); // ?? // 콘솔 'Jack', return undefined
+        }
+        // if문에서 변경된 name은 여전히 전역 변수
+        console.log(name); // 'Jack'
+
+        // slide4
+        for (var i = 0; i < 5; i++) { // for문은 함수가 아니다. 전역변수 i 선언, 0 할당.
+            console.log(i); // 다섯번 iteration // 0,1,2,3,4
+        }
+        console.log('final i:', i); // ?? // 5
+
+        // let 변수 선언
+        for (let i = 0; i < 5; i++) { // let은 블럭 범위. for 문 안에서만 존재함.
+            console.log(i); // 다섯번 iteration // 0,1,2,3,4
+        }
+        console.log('final i:', i); // ReferenceError
+
+        // window 객체
+        var name = "Paul"; // 전역변수 name 선언, 'Paul' 할당
+        console.log(window.name); // Paul // window 속성으로 들어감
+
+        // 선언없이 할당
+        function showAge() { // 선언식 함수 showAge
+            // age는 전역 변수.
+            age = 90; // 변수 선언 x -> 전역변수로 들어감
+            console.log(age); // 90
+        }
+        showAge(); // 90
+        console.log(age); // 90
+
+    </script>
+</body>
+
+</html>
