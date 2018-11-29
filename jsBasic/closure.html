@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Closure</title>
+</head>
+
+<body>
+    <script>
+        // closure 예제1
+        function outer() { // outer 선언식 외부함수
+            console.log('outer fn invoked'); // outer 함수 실행하면 콘솔 'outer fn invoked' 프린트
+            function inner() { // inner 선언식 내부함수
+                console.log('inner fn invoked'); // inner 함수 실행하면 콘솔 'inner fn invoked' 프린트
+            }
+            return inner; // inner 함수 리턴
+        }
+
+        outer(); // ? // 'outer fn invoked' 콘솔 프린트 후 inner 함수 자체 리턴
+        //outer()();  // ? // 'outer fn invoked' 콘솔 프린트 후 리턴된 inner함수 실행 'inner fn invoked' 콘솔 프린트
+        var innerFn = outer(); // ? // 리턴된 inner 함수 담김
+        // innerFn(); // ? // inner 함수 실행 'inner fn  invoked' 콘솔 프린트
+
+        // closure 예제2
+        function outer() { // 선언식 함수 outer
+            var outerVar = 'outer fn variable '; // 지역함수 outerVar 선언, 'outer fn variable' 할당
+            function inner() { // 선언식 내부함수 inner
+                var innerVar = 'inner fn variable '; // 내부 지역변수 innerVar 선언, 'inner fn variable' 할당
+                console.log(outerVar + innerVar); // 내부함수는 외부 함수의 변수 이용 가능
+                // 외부 함수의 변수(outerVar)를 내부 함수, 즉 closure가 사용할 수 있음
+                // outer fn variableinner fn variable
+            }
+        }
+
+        // closure 예제3
+        var greeting = 'Hello'; // 전역 변수에 대한 접근 가능 // 전역변수 greeting 선언, 'Hello' 할당
+        function showName(firstName, lastName) { // 선언식 함수 showName, 매개변수 firstName, lastName 2개
+            var nameIntro = 'My name is '; // 지역변수 nameIntro 선언, 'My name is ' 할당
+            function makeFullName() { // 선언식 내부함수 makeFullName
+                // 이 내부 함수(makeFullName)는 외부 함수(showName)의 변수뿐만 아니라
+                // 파라미터 까지 사용할 수 있다.
+                return greeting + ', ' + nameIntro + firstName + ' ' + lastName;
+                // 리턴 'Hello, My name is (showName 매개변수 firstName) (showName 매개변수 lastName);
+            }
+            return makeFullName(); // 내부함수 makeFullName 실행 후 리턴 값 리턴
+        }
+
+        showName('Michael', 'Jackson'); // 'Hello, My name is Michael Jackson'
+        // Hello, My name is Michael Jackson
+
+        //Currying
+        function adder(x) { // 매개변수 x를 받는 adder 선언식 함수
+            return function (y) { // 매개변수 y를 받는 리턴 함수
+                return x + y; // return 되는 내부함수는 x+y를 리턴한다.
+            }
+        }
+        adder(2)(3); // 5
+
+        // 유용한 closure Currying 예제
+        function elementMaker(tagName) { // tagName을 매개변수로 받는 선언식 함수
+            var startTag = '<' + tagName + '>'; // 지역변수 startTag 선언, 여는 태그 할당
+            var endTag = '</' + tagName + '>'; // 지역변수 endTag 선언, 닫는 태그 할당
+            return function (content) { // content를 매개변수로 받는 익명함수 리턴
+                return startTag + content + endTag; // 상위 함수의 변수 startTag, endTag 사용, 태그 요소 리턴
+            }
+        }
+
+        elementMaker('div')('hello world'); // <div>hello world</div>
+        var divMaker = elementMaker('div'); // <div></div> 만드는 외부함수
+        divMaker('code states'); // <div>code states</div> // content를 받는 내부함수
+        divMaker('great'); // <div>great</div>
+
+        var h1Maker = elementMaker('h1'); // <h1></h1>을 만드는 외부함수
+        h1Maker('Headline'); // <h1>Headline</h1>
+
+        // private 처럼 사용하는 closure 예제
+        /* privateCounter를 직접 수정할 수 없음. 확인하기 위해서는 getValue 메소드를 이용해야 함. */
+        function makeCounter() { // makeCounter 선언식 함수
+            var privateCounter = 0; // 지역변수 privateCounter 선언, 0 할당
+            function changeBy(val) { // 선언식 inner 함수 changeBy, 매개변수 val 1개
+                privateCounter += val; // 외부함수 privateCounter에 val 인수를 더함
+            }
+
+            return { // 리턴 object
+                increment: function () { // increment 메소드. changeBy를 이용하여 privateCounter에 1더함
+                    changeBy(1);
+                },
+                decrement: function () { // decrement 메소드. changeBy를 이용하여 privateCounter에 -1 더함.(1 뺌)
+                    changeBy(-1);
+                },
+                getValue: function () { // getValue 메소드. privateCounter를 리턴. 
+                    return privateCounter;
+                }
+            }
+        }
+
+        var counter1 = makeCounter(); // 전역변수 counter1 선언, makeCounter 함수 할당(리턴된 object 담김)
+        counter1.increment(); // increment 메소드 실행
+        counter1.increment();
+        console.log(counter1.getValue()); // 2
+
+        var counter2 = makeCounter(); // 전역변수 counter2 선언, makeCounter 함수 할당(counter1과 다름)
+        counter2.increment(); // privateCounter: 1
+        counter2.decrement(); // privateCounter: 0
+        counter2.increment(); // privateCounter: 1
+        console.log(counter2.getValue()); // 1
+
+    </script>
+</body>
+
+</html>
