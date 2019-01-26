@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Baseball Game</title>
+</head>
+
+<body>
+    <script>
+        var numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var choice = [];
+        var random, ball, strike, userInput;
+        for (var i = 0; i < 4; i++) {
+            random = Math.floor(Math.random() * numArr.length);
+            while (choice.indexOf(String(numArr[random])) !== -1) {
+                random = Math.floor(Math.random() * numArr.length);
+            }
+            choice.push(String(numArr[random]));
+        }
+        for (var count = 0; count < 10; count++) {
+            userInput = prompt('숫자 4개 입력: ');
+            if(!userInput){
+                alert('게임 종료');
+                break;
+            }
+            while (isNaN(Number(userInput)) || (userInput.length !== 4)) {
+                userInput = prompt('다시 입력: ');
+            }
+            userInput = userInput.split('');
+            strike = 0;
+            ball = 0;
+            for(var j=0; j<choice.length; j++){
+                for(var k=0; k<userInput.length; k++){
+                    if(choice[j] === userInput[k]){
+                        if(j===k){
+                            strike++;
+                        } else {
+                            ball++;
+                        }
+                    }
+                }
+            }
+            if(strike === 4){
+                console.log(count+1 + '번만에 성공');
+                break;
+            } else {
+                alert(count+1 + '번째, ' +userInput.join(', ') + '\n' + ball + ' ball, ' + strike + ' strike');
+            }
+        }
+        if(strike !== 4 && count >= 10){
+            alert('10번 안에 맞추기 실패!');
+        }
+    </script>
+</body>
+
+</html>

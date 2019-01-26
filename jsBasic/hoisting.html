@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hoisting</title>
+</head>
+
+<body>
+    <script>
+        // slide1
+        a = 2; // 전역변수 a에 2 할당
+        var a; // 전역변수 a 선언
+        console.log(a); // ?? // 2
+
+        // JavaScript engine 이해
+        var a; // 전역변수 a를 선언
+        a = 2; // 전역변수 a에 2 할당
+        console.log(a); // 콘솔 2
+
+        console.log(a); // ?? // undefined
+        var a = 2; // 전역변수 a에 2할당
+
+        //JavaScript engine 이해
+        var a; // 선언만 끌어올림. undefined
+        console.log(a);
+        a = 2; // a에 2 할당
+
+        // slide2
+        function showName() { // 선언식 함수 showName
+            console.log("First name : " + name); // 콘솔 First name : undefined
+            var name = "Ford"; // 지역변수 name, 'Ford' 할당
+        }
+
+        // Javascript engine 이해
+        function showName() { // showName 선언식 함수
+            var name; // 지역변수 name 선언만 호이스트, undefined 상태
+            console.log("First name : " + name); // 콘솔 First name : undefined
+            name = "Ford"; // name에 'Ford' 할당
+        }
+
+        // 표현식 함수 호이스팅
+        show(); // ? // Type Error.
+        var show = function () { // 표현식 함수 show. 
+            console.log('displayed!'); // 콘솔 displayed!
+        }
+
+        // Javascript engine 이해
+        var show; // 전역변수 show 선언, undefined
+        show(); // type error. show는 함수가 아니다. undefined()와 같음
+        show = function(){ // show에 함수 할당
+            console.log('displayed!');
+        }
+    </script>
+</body>
+
+</html>

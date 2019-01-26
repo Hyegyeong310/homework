@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Flatten Function</title>
+</head>
+
+<body>
+  <script>
+    function flatten(array) {
+      //your solution here
+      var arr = array.slice(); // array copy
+
+      /*
+      var result = arr.reduce(function(accu, curr){
+        return accu.concat(curr);
+      },[]);
+      
+      return result;
+      */
+
+      var result = [];
+      var arrayChk = function (arr) { // arr를 인자로 받음
+        for (var elem of arr) { // arr 전체 요소 루프
+          if (!Array.isArray(elem)) { // elem이 array가 아니면
+            result.push(elem); // result에 push
+          } else {
+            arrayChk(elem); // arrayChk 재귀함수
+          }
+        }
+        return result; // 하나로 합친 배열 리턴
+      }
+      return arrayChk(arr); // arrayChk의 리턴값 리턴
+    }
+
+    var input1 = ['abcd','[1,2,3]',['[]'],[null,[null]],[true,false]];
+    console.log(flatten(input1)); // ["abcd", "[1,2,3]", "[]", null, null, true, false]
+    var input2 = [1, 2, [3], [4, [1, 2, 3, [null, [false, true]]]]];
+    console.log(flatten(input2)); // [ 1, 2, 3, 4, 1, 2, 3, null, false, true ]
+  </script>
+</body>
+
+</html>
